@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Meteostanica</title>
+    <style>
+        /* Import Roboto font */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        /* Apply Roboto font to all elements */
+        body, h1, canvas {
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        #chart-container {
+            height: 50vh;
+            width: 50%;
+        }
+
+        h1 {
+            margin-bottom: 20px; /* Adjust the margin bottom as needed */
+        }
+        h2 {
+            margin-top: 20px; /* Adjust the margin bottom as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        Meteostanica predpoveď
+    </h1>
+    <div id="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+        const labels = {{ labels | safe }};
+        const temp_data = {{ temp_data | safe }};
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Temperature',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: temp_data,
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Hodina'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Teplota v °C'
+                        }
+                    }
+                }
+            }
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
+</body>
+
+</html>
